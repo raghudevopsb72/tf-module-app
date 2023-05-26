@@ -34,17 +34,19 @@ resource "aws_security_group" "sg" {
 
 
 resource "aws_launch_template" "template" {
-  name_prefix            = "${var.name}-${var.env}"
+  name_prefix            = "${var.name}-${var.env}-lt"
   image_id               = data.aws_ami.ami.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
 }
 
 resource "aws_autoscaling_group" "asg" {
-  availability_zones = ["us-east-1a"]
-  desired_capacity   = var.desired_capacity
-  max_size           = var.max_size
-  min_size           = var.max_size
+  name                = "${var.name}-${var.env}-asg"
+  desired_capacity    = var.desired_capacity
+  max_size            = var.max_size
+  min_size            = var.max_size
+  vpc_zone_identifier = var.subnet_ids
+
 
   launch_template {
     id      = aws_launch_template.template.id
