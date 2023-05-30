@@ -44,6 +44,7 @@ resource "aws_autoscaling_group" "asg" {
   max_size            = var.max_size
   min_size            = var.min_size
   vpc_zone_identifier = var.subnet_ids
+  target_group_arns   = [aws_lb_target_group.main.arn]
 
 
   launch_template {
