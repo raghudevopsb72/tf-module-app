@@ -16,3 +16,4 @@ variable "domain_name" {}
 variable "domain_id" {}
 variable "lb_dns_name" {}
 variable "dns_name" {}
+variable "kms_arn" {}
