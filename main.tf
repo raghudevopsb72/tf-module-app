@@ -36,7 +36,9 @@ resource "aws_launch_template" "template" {
   image_id               = data.aws_ami.ami.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
-  iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
+  iam_instance_profile = {
+    name = aws_iam_instance_profile.instance_profile.name
+  }
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     name = var.name
