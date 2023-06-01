@@ -78,6 +78,15 @@ resource "aws_lb_target_group" "main" {
   protocol = "HTTP"
   vpc_id   = var.vpc_id
   tags     = merge(var.tags, { Name = "${var.name}-${var.env}-tg" })
+
+  health_check {
+    enabled             = true
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    interval            = 5
+    timeout             = 4
+    path                = "/health"
+  }
 }
 
 resource "aws_lb_listener_rule" "rule" {
